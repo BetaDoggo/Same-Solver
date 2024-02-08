@@ -1,14 +1,5 @@
 import random
 
-aMoves = []
-bMoves = []
-cMoves = []
-dMoves = []
-eMoves = []
-fMoves = []
-gMoves = []
-hMoves = []
-
 def convert(move): #converts the leters into human readable format
     if (move == "a"):
         Hmove = "Top-Left"
@@ -30,7 +21,6 @@ def convert(move): #converts the leters into human readable format
         Hmove = "Bottom-Right"
     return(Hmove)
     
-
 def flip(num):
     if (num == "0"):
         num = "1"
@@ -85,60 +75,28 @@ def step(Lboard, move):
         print("failed")
     return(Lboard)
 
-def brute(): #brute force method
-    target = 5
-    steps = target + 1
-    board = Startboard
-    Listboard = list(board)
-    moves = ["a","b","c","d","e","f","g","h","i"]
-    sequence = ""
+def brute():
+    solved = False
     attempts = 0
-    while (steps > target):
+    moves = ["a","b","c","d","e","f","g","h","i"]
+    while (solved != True):
         attempts = attempts + 1
         steps = 0
         sequence = ""
         board = Startboard
         Listboard = list(board)
-        while (board != "000000000" and board != "111111111"):
+        while (board != "000000000" and board != "111111111" and steps < 5):
             move = moves[random.randint(0,8)]
             Listboard = step(Listboard,move)
             board = "".join(Listboard)
             sequence = sequence + " | " + convert(move)
             steps = steps + 1
+        if (board == "000000000" or board == "111111111"):
+            solved = True
     print("Attempts: " + str(attempts))
     print("Steps: " + str(steps))
     print("Sequence: " + str(sequence))
 
-def method1():    
-    board = "000000000"
-    Listboard = list(board)
-    moves = ["a","b","c","d","e","f","g","h","i"]
-    oneStep = []
-
-    for move in moves:
-        print(move)
-        newboard = step(Listboard,move)
-        if (move == "a"):
-            aMoves.append(newboard)
-        if (move == "b"):
-            bMoves.append(newboard)
-        if (move == "c"):
-            cMoves.append(newboard)
-        if (move == "d"):
-            dMoves.append(newboard)
-        if (move == "e"):
-            eMoves.append(newboard)
-        if (move == "f"):
-            fMoves.append(newboard)
-        if (move == "g"):
-            gMoves.append(newboard)
-        if (move == "h"):
-            hMoves.append(newboard)
-        if (move == "i"):
-            iMoves.append(newboard)  
-    print(oneStep)
-
-#method1() # not working yet
 print("Enter the value of each tile from left to right. ex: 100110111")
 while True:
     Startboard = input("Enter the starting board: ")
