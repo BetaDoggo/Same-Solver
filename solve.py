@@ -1,12 +1,4 @@
-# each board state is represented with 9 digits, the first letter is the move used to reach that state from a later solved state
 import random
-'''
-0 1 2
-
-3 4 5
-
-6 7 8
-'''
 
 aMoves = []
 bMoves = []
@@ -17,6 +9,28 @@ fMoves = []
 gMoves = []
 hMoves = []
 
+def convert(move): #converts the leters into human readable format
+    if (move == "a"):
+        Hmove = "Top-Left"
+    if (move == "b"):
+        Hmove = "Top-Middle"
+    if (move == "c"):
+        Hmove = "Top-Right"
+    if (move == "d"):
+        Hmove = "Middle-Left"
+    if (move == "e"):
+        Hmove = "Middle"
+    if (move == "f"):
+        Hmove = "Middle-Right"
+    if (move == "g"):
+        Hmove = "Bottom-Left"
+    if (move == "h"):
+        Hmove = "Bottom-Middle"
+    if (move == "i"):
+        Hmove = "Bottom-Right"
+    return(Hmove)
+    
+
 def flip(num):
     if (num == "0"):
         num = "1"
@@ -25,7 +39,6 @@ def flip(num):
     return(num)
 
 def step(Lboard, move):
-    #print(move)
     if (move == "a"):
         Lboard[0] = flip(Lboard[0])
         Lboard[1] = flip(Lboard[1])
@@ -90,11 +103,11 @@ def brute(): #brute force method
             move = moves[random.randint(0,8)]
             Listboard = step(Listboard,move)
             board = "".join(Listboard)
-            sequence = sequence + str(move)
+            sequence = sequence + " | " + convert(move)
             steps = steps + 1
     print("Attempts: " + str(attempts))
+    print("Steps: " + str(steps))
     print("Sequence: " + str(sequence))
-    print("Total Steps: " + str(steps))
 
 def method1():    
     board = "000000000"
@@ -126,5 +139,10 @@ def method1():
     print(oneStep)
 
 #method1() # not working yet
-Startboard = input("Enter the starting board: ")
-brute()
+print("Enter the value of each tile from left to right. ex: 100110111")
+while True:
+    Startboard = input("Enter the starting board: ")
+    if (len(Startboard) != 9):
+        print("Your board is the wrong size, it should be 9 digits. ex: 100110111")
+    else:    
+        brute()
